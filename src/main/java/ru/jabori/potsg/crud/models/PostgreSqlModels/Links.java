@@ -8,12 +8,12 @@ import java.util.Date;
 public class Links {
 
     @ManyToOne
-    @JoinColumn(name = "userId",
+    @JoinColumn(name = "user_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Users linkUser;
 
     @ManyToOne
-    @JoinColumn(name = "chatId",
+    @JoinColumn(name = "chat_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Chats chat;
 
@@ -23,25 +23,25 @@ public class Links {
     @Column(name="admin")
     private boolean admin;
 
-    @Column(name="reductRight")
+    @Column(name="reductright")
     private boolean reductRight;
 
-    @Column(name="inviteDateTime")
+    @Column(name="invite_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date inviteDateTime;
 
-    @Column(name="teamId")
+    @Column(name="team_id")
     private int teamId;
 
     public Links() {
     }
 
     public Links(LinksPK primaryKey, boolean admin,
-                 boolean reductRight, Date inviteDateTime, int teamId) {
+                 boolean reductRight, int teamId) {
         this.primaryKey = primaryKey;
         this.admin = admin;
         this.reductRight = reductRight;
-        this.inviteDateTime = inviteDateTime;
+        this.inviteDateTime = new Date();
         this.teamId = teamId;
     }
 

@@ -6,11 +6,11 @@ import javax.persistence.*;
 public class Messages {
 
     @ManyToOne
-    @JoinColumn(name = "suggesterId",
+    @JoinColumn(name = "suggester_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Users messageUser;
     @ManyToOne
-    @JoinColumn(name = "chatId",
+    @JoinColumn(name = "chat_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Chats chat;
 

@@ -7,16 +7,16 @@ import java.util.Date;
 public class Transactions {
 
     @ManyToOne
-    @JoinColumn(name = "accepterId",
+    @JoinColumn(name = "accepter_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Users acceptTransactionUser;
     @ManyToOne
-    @JoinColumn(name = "suggesterId",
+    @JoinColumn(name = "suggester_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Users suggestTransactionUser;
 
     @ManyToOne
-    @JoinColumn(name = "chatId",
+    @JoinColumn(name = "chat_id",
             referencedColumnName = "id", insertable = false,updatable = false)
     private Chats chat;
 
@@ -32,14 +32,14 @@ public class Transactions {
     @Column(name="description")
     private String description;
 
-    @Column(name="suggestionDateTime")
+    @Column(name="suggestion_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date suggestionDateTime;
 
-    @Column(name="suggesterId")
+    @Column(name="suggester_id")
     private int suggesterId;
 
-    @Column(name="chatId")
+    @Column(name="chat_id")
     private int chatId;
 
     public Transactions() {

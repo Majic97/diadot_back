@@ -7,11 +7,11 @@ import java.util.Date;
 @Embeddable
 public class TransactionsPK implements Serializable {
 
-    @Column(name="acceptionDateTime")
+    @Column(name="acception_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date acceptionDateTime;
 
-    @Column(name = "accepterId")
+    @Column(name = "accepter_id")
     private int accepterId;
 
     public TransactionsPK() {

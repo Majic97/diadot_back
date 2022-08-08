@@ -3,10 +3,14 @@ package ru.jabori.potsg.crud.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.jabori.potsg.crud.models.PostgreSqlModels.Chats;
+import ru.jabori.potsg.crud.models.PostgreSqlModels.Links;
+import ru.jabori.potsg.crud.models.PostgreSqlModels.LinksPK;
 import ru.jabori.potsg.crud.models.PostgreSqlModels.Users;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -23,15 +27,27 @@ public class UserDao {
     public void getSome(){
         Session session = entityManager.unwrap(Session.class);
 
-        List<Users> people = session.createQuery("select u from Users u", Users.class).getResultList();
+        List<Chats> people = session.createQuery("select c from Chats c", Chats.class).getResultList();
 
-//        List<Object[]> t1 = session.createNativeQuery("SELECT * FROM users").list();
 
-        System.out.println(String.valueOf(people.get(0).getName()));
 
-//        for(Users user: people){
-//            System.out.println(String.valueOf(user.getId())+ " " + user.getName());
-//        }
+    }
+
+    @Transactional
+    public void createNewChat(){
+        Session session = entityManager.unwrap(Session.class);
+
+        Chats insert_chat = new Chats("Default chat","","usd");
+
+        session.save(insert_chat);
+
+        Date currentDateTime = new Date();
+
+        Links link = new Links(new LinksPK(insert_chat.getId(),1),true,
+                true, 1);
+        session.save(link);
+
+
     }
 
 }

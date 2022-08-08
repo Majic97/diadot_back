@@ -7,11 +7,11 @@ import java.util.Date;
 @Embeddable
 public class MessagesPK implements Serializable {
 
-    @Column(name = "suggestionDateTime")
+    @Column(name = "suggestion_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date suggestionDateTime;
 
-    @Column(name="suggesterId")
+    @Column(name="suggester_id")
     private int suggesterId;
 
     public MessagesPK() {

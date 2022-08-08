@@ -15,7 +15,7 @@ public class DeafaultController {
     @GetMapping("/hello")
     public String firstPage() {
         System.out.println("Hello");
-        userDao.getSome();
+        userDao.createNewChat();
 
         return "Hello";
     }

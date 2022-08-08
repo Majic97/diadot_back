@@ -9,10 +9,10 @@ import java.io.Serializable;
 @Embeddable
 public class LinksPK implements Serializable {
 
-    @Column(name="chatId")
+    @Column(name="chat_id")
     private int chatId;
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private int userId;
 
     public LinksPK() {
