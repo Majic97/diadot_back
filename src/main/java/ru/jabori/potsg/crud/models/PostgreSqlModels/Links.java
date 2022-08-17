@@ -1,7 +1,12 @@
 package ru.jabori.potsg.crud.models.PostgreSqlModels;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name="links")
@@ -21,16 +26,21 @@ public class Links {
     private LinksPK primaryKey;
 
     @Column(name="admin")
+    @NotNull
     private boolean admin;
 
-    @Column(name="reductright")
+    @Column(name="reduct_right")
+    @NotNull
     private boolean reductRight;
 
     @Column(name="invite_date_time")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy/hh/mm/ss")
+    @NotNull
     private Date inviteDateTime;
 
     @Column(name="team_id")
+    @NotNull
     private int teamId;
 
     public Links() {
@@ -41,7 +51,7 @@ public class Links {
         this.primaryKey = primaryKey;
         this.admin = admin;
         this.reductRight = reductRight;
-        this.inviteDateTime = new Date();
+        this.inviteDateTime = Date.from(Instant.now());
         this.teamId = teamId;
     }
 
@@ -61,7 +71,7 @@ public class Links {
         this.admin = admin;
     }
 
-    public boolean isReductRight() {
+    public boolean hasReductRight() {
         return reductRight;
     }
 
@@ -99,5 +109,18 @@ public class Links {
 
     public void setChat(Chats chat) {
         this.chat = chat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Links)) return false;
+        Links links = (Links) o;
+        return isAdmin() == links.isAdmin() && reductRight == links.reductRight && getTeamId() == links.getTeamId() && getLinkUser().equals(links.getLinkUser()) && getChat().equals(links.getChat()) && getPrimaryKey().equals(links.getPrimaryKey()) && getInviteDateTime().equals(links.getInviteDateTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLinkUser(), getChat(), getPrimaryKey(), isAdmin(), reductRight, getInviteDateTime(), getTeamId());
     }
 }

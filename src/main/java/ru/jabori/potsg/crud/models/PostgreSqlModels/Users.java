@@ -1,7 +1,16 @@
 package ru.jabori.potsg.crud.models.PostgreSqlModels;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="users")
@@ -25,21 +34,34 @@ public class Users {
     private int id;
 
     @Column(name="name")
+    @NotNull
+    @Length(min = 5,max = 32,message = "Name should be between 4 and 32 characters")
     private String name;
 
     @Column(name="login")
+    @NotNull
+    @Length(min = 5,max = 32,message = "Login should be between 4 and 32 characters")
     private String login;
 
     @Column(name="password")
+    @Length(min = 64, max = 64 , message = "Password should be 64 characters")
     private String password;
 
     @Column(name="email")
+    @NotNull
+    @Email
     private String email;
 
     @Column(name="information")
     private String information;
 
+    @Column(name="number")
+    @Length(min=5, message = "Number should be more than 5 characters")
+    private String number;
+
     @Column(name="region")
+    @NotNull
+    @Length(min = 5, max = 5, message = "Region should be 5 characters")
     private String region;
 
     public Users() {
@@ -47,13 +69,14 @@ public class Users {
 
     public Users(String name, String login,
                  String password, String email,
-                 String region, String information) {
+                 String region, String information, String number) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
         this.information = information;
         this.region = region;
+        this.number = number;
     }
 
     public int getId() {
@@ -142,5 +165,33 @@ public class Users {
 
     public void setTransactionsUserAsAccepter(List<Transactions> transactionsUserAsAccepter) {
         this.transactionsUserAsAccepter = transactionsUserAsAccepter;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Users)) return false;
+        Users users = (Users) o;
+        return getId() == users.getId() && getLinks().equals(users.getLinks()) && getMessages().equals(users.getMessages())
+                && getTransactionsUserAsAccepter().equals(users.getTransactionsUserAsAccepter()) &&
+                getTransactionsUserAsSuggester().equals(users.getTransactionsUserAsSuggester()) &&
+                getName().equals(users.getName()) && getLogin().equals(users.getLogin()) &&
+                getPassword().equals(users.getPassword()) && getEmail().equals(users.getEmail())
+                && getInformation().equals(users.getInformation()) && getNumber().equals(users.getNumber())
+                && getRegion().equals(users.getRegion());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLinks(), getMessages(), getTransactionsUserAsAccepter(), getTransactionsUserAsSuggester(),
+                getId(), getName(), getLogin(), getPassword(), getEmail(), getInformation(), getNumber(), getRegion());
     }
 }

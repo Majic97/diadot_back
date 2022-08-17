@@ -1,6 +1,10 @@
 package ru.jabori.potsg.crud.models.PostgreSqlModels;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Messages {
@@ -15,35 +19,36 @@ public class Messages {
     private Chats chat;
 
     @EmbeddedId
-    private MessagesPK id;
+    private MessagesPK messagePK;
 
     @Column(name="operation")
+    @NotNull
     private float operation;
 
     @Column(name="description")
+    @Length(max=200, message = "Description should be less than 200 characters")
     private String description;
 
-    @Column(name="chatId")
+    @Column(name="chat_id")
+    @NotNull
     private int chatId;
 
     public Messages() {
     }
 
-    public Messages(Users messageUser, Chats chat, MessagesPK id, float operation, String description, int chatId) {
-        this.messageUser = messageUser;
-        this.chat = chat;
-        this.id = id;
+    public Messages(MessagesPK messagePK, float operation, String description, int chatId) {
+        this.messagePK = messagePK;
         this.operation = operation;
         this.description = description;
         this.chatId = chatId;
     }
 
-    public MessagesPK getId() {
-        return id;
+    public MessagesPK getMessagePK() {
+        return messagePK;
     }
 
-    public void setId(MessagesPK id) {
-        this.id = id;
+    public void setMessagePK(MessagesPK id) {
+        this.messagePK = id;
     }
 
     public float getOperation() {
@@ -84,5 +89,18 @@ public class Messages {
 
     public void setMessageUser(Users messageUser) {
         this.messageUser = messageUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Messages)) return false;
+        Messages messages = (Messages) o;
+        return Float.compare(messages.getOperation(), getOperation()) == 0 && getChatId() == messages.getChatId() && getMessageUser().equals(messages.getMessageUser()) && getChat().equals(messages.getChat()) && getMessagePK().equals(messages.getMessagePK()) && getDescription().equals(messages.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMessageUser(), getChat(), getMessagePK(), getOperation(), getDescription(), getChatId());
     }
 }

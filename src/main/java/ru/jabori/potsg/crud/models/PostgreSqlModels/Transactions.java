@@ -1,7 +1,12 @@
 package ru.jabori.potsg.crud.models.PostgreSqlModels;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Transactions {
@@ -21,43 +26,52 @@ public class Transactions {
     private Chats chat;
 
     @EmbeddedId
-    private TransactionsPK id;
+    private TransactionsPK transactionPK;
 
     @Column(name="operation")
+    @NotNull
     private float operation;
 
     @Column(name="result")
+    @NotNull
     private float result;
 
     @Column(name="description")
+    @Length(max = 200, message = "Description should be less than 200 characters")
     private String description;
 
     @Column(name="suggestion_date_time")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy/hh/mm/ss")
+    @NotNull
     private Date suggestionDateTime;
 
     @Column(name="suggester_id")
+    @NotNull
     private int suggesterId;
 
     @Column(name="chat_id")
+    @NotNull
     private int chatId;
+
+    @Column(name="is_cancelled_message")
+    @NotNull
+    private boolean isCancelledMessage;
 
     public Transactions() {
     }
 
-    public Transactions(Users acceptTransactionUser, Users suggestTransactionUser, Chats chat,
-                        TransactionsPK id, float operation, float result, String description,
-                        Date suggestionDateTime, int suggesterId, int chatId) {
-        this.acceptTransactionUser = acceptTransactionUser;
-        this.suggestTransactionUser = suggestTransactionUser;
-        this.chat = chat;
-        this.id = id;
+    public Transactions(TransactionsPK transactionPK, float operation,
+                        float result, String description, Date suggestionDateTime,
+                        int suggesterId, int chatId, boolean isCancelledMessage) {
+        this.transactionPK = transactionPK;
         this.operation = operation;
         this.result = result;
         this.description = description;
         this.suggestionDateTime = suggestionDateTime;
         this.suggesterId = suggesterId;
         this.chatId = chatId;
+        this.isCancelledMessage = isCancelledMessage;
     }
 
     public Users getUser2() {
@@ -68,12 +82,12 @@ public class Transactions {
         this.suggestTransactionUser = user;
     }
 
-    public TransactionsPK getId() {
-        return id;
+    public TransactionsPK getTransactionPK() {
+        return transactionPK;
     }
 
-    public void setId(TransactionsPK id) {
-        this.id = id;
+    public void setTransactionPK(TransactionsPK id) {
+        this.transactionPK = id;
     }
 
     public float getOperation() {
@@ -142,5 +156,26 @@ public class Transactions {
 
     public void setAcceptTransactionUser(Users acceptTransactionUser) {
         this.acceptTransactionUser = acceptTransactionUser;
+    }
+
+    public boolean getIsCancelledMessage() {
+        return isCancelledMessage;
+    }
+
+    public void setIsCancelledMessage(boolean isCancelledMessage) {
+        this.isCancelledMessage = isCancelledMessage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transactions)) return false;
+        Transactions that = (Transactions) o;
+        return Float.compare(that.getOperation(), getOperation()) == 0 && Float.compare(that.getResult(), getResult()) == 0 && getSuggesterId() == that.getSuggesterId() && getChatId() == that.getChatId() && isCancelledMessage == that.isCancelledMessage && getAcceptTransactionUser().equals(that.getAcceptTransactionUser()) && getSuggestTransactionUser().equals(that.getSuggestTransactionUser()) && getChat().equals(that.getChat()) && getTransactionPK().equals(that.getTransactionPK()) && getDescription().equals(that.getDescription()) && getSuggestionDateTime().equals(that.getSuggestionDateTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAcceptTransactionUser(), getSuggestTransactionUser(), getChat(), getTransactionPK(), getOperation(), getResult(), getDescription(), getSuggestionDateTime(), getSuggesterId(), getChatId(), isCancelledMessage);
     }
 }
