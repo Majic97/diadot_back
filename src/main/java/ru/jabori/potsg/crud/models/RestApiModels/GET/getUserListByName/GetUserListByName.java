@@ -1,4 +1,4 @@
-package ru.jabori.potsg.crud.models.RestApiModels.getUserListByName;
+package ru.jabori.potsg.crud.models.RestApiModels.GET.getUserListByName;
 
 import java.io.Serializable;
 

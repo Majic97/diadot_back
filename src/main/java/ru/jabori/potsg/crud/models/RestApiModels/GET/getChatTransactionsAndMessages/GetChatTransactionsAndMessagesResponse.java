@@ -1,4 +1,4 @@
-package ru.jabori.potsg.crud.models.RestApiModels.getChatTransactionsAndMessages;
+package ru.jabori.potsg.crud.models.RestApiModels.GET.getChatTransactionsAndMessages;
 
 import ru.jabori.potsg.crud.models.RestApiModels.MessageData;
 import ru.jabori.potsg.crud.models.RestApiModels.TransactionData;

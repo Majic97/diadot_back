@@ -1,14 +1,13 @@
-package ru.jabori.potsg.crud.models.RestApiModels.getStatusInChat;
+package ru.jabori.potsg.crud.models.RestApiModels.GET.getChatDescription;
 
 import java.io.Serializable;
 
-public class GetStatusInChatRequest implements Serializable {
+public class GetChatDescriptionRequest implements Serializable {
 
     private int user_id;
-
     private int chat_id;
 
-    public GetStatusInChatRequest(int user_id, int chat_id) {
+    public GetChatDescriptionRequest(int user_id, int chat_id) {
         this.user_id = user_id;
         this.chat_id = chat_id;
     }

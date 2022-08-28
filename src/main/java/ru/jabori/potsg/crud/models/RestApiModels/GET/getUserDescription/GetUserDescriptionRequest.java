@@ -1,4 +1,4 @@
-package ru.jabori.potsg.crud.models.RestApiModels.getUserDescription;
+package ru.jabori.potsg.crud.models.RestApiModels.GET.getUserDescription;
 
 import java.io.Serializable;
 

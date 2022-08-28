@@ -1,4 +1,4 @@
-package ru.jabori.potsg.crud.models.RestApiModels.getChats;
+package ru.jabori.potsg.crud.models.RestApiModels.GET.getChats;
 
 import java.io.Serializable;
 import java.util.Date;

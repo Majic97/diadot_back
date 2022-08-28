@@ -1,4 +1,4 @@
-package ru.jabori.potsg.crud.models.RestApiModels.addNewChat;
+package ru.jabori.potsg.crud.models.RestApiModels.ADD.addNewChat;
 
 import java.io.Serializable;
 
