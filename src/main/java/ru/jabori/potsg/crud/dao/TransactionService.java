@@ -190,6 +190,18 @@ public class TransactionService {
     }
 
     @Transactional(rollbackOn = Exception.class)
+    public List<Users> getUsersByLogin(String login){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query usersQuery = session.createQuery("select u from Users u where u.login=:login");
+        usersQuery.setParameter("login",login);
+
+
+
+        return usersQuery.getResultList();
+    }
+
+    @Transactional(rollbackOn = Exception.class)
     public void changeMessageStatus(int accepterId, boolean isAccepted, int chatId, int suggesterId, String dateTimeStringForm)
     throws Exception{
         Date suggestionDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
